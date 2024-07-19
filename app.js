@@ -1,3 +1,5 @@
+let numerosSorteados = [];
+let numeroLimite = 10;
 let numeroSecreto = gerarNumeroAleatorio();
 let tentativas = 1;
 
@@ -31,12 +33,24 @@ function verificarChute() {
             exibirTextoNaTela('p','O número secreto é maior...');
         }
         tentativas++;
-        limparCampo()
+        limparCampo();
     }
 }
 
 function gerarNumeroAleatorio() {
-    return parseInt(Math.random() * 10 + 1);
+    let numeroEscolhido = parseInt(Math.random() * numeroLimite + 1);
+    let quantidadeDeElementosDaLista = numerosSorteados.length;
+
+    if (quantidadeDeElementosDaLista == numeroLimite) {
+        numerosSorteados = [];
+    }
+
+    if (numerosSorteados.includes(numeroEscolhido)) {
+        return gerarNumeroAleatorio();
+    } else {
+        numerosSorteados.push(numeroEscolhido);
+        return numeroEscolhido;
+    }
 }
 
 function limparCampo() {
@@ -50,5 +64,4 @@ function reiniciarJogo() {
     limparCampo();
     tentativas = 1;
     document.getElementById('reiniciar').setAttribute('disabled', true);
-
 }
